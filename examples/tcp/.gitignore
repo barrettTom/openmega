@@ -1,0 +1,5 @@
+*.o
+tcpclient
+tcpserver
+tcpmulticlient
+tcpmultiserver

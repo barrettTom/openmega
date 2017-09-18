@@ -2,8 +2,7 @@
 #define socket_h
 
 #include <SDL2/SDL_net.h>
-#include <stdlib.h>
-#include <malloc.h>
+#include <iostream>
 #include <string>
 
 #define MAXLEN 1024

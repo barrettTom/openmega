@@ -5,6 +5,10 @@ Socket::Socket()
 	SDLNet_Init();
 	SDLNet_ResolveHost(&ip, "localhost", port);
 	socket = SDLNet_TCP_Open(&ip);
+	if(!socket){
+		std::cout << "Cannot connect to server.\n" << std::endl;
+		exit(1);
+	}
 }
 
 Socket::~Socket()

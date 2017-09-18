@@ -16,10 +16,10 @@ int main()
 				e.off();
 			else if(e.gEventType() == SDL_KEYDOWN)
 				switch(e.gEvent().key.keysym.sym){
-		    			case(SDLK_w): me.up();    break;
-					case(SDLK_s): me.down();  break;
-					case(SDLK_a): me.left();  break;
-					case(SDLK_d): me.right(); break;
+		    			case(SDLK_w): me.setAction("up");    break;
+					case(SDLK_s): me.setAction("down");  break;
+					case(SDLK_a): me.setAction("left");  break;
+					case(SDLK_d): me.setAction("right"); break;
 				}
 		}
 	

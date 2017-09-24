@@ -1,6 +1,6 @@
 #include "socket.hpp"
 
-Socket::Socket()
+Socket::Socket(std::string name)
 {
 	SDLNet_Init();
 	SDLNet_ResolveHost(&ip, "localhost", port);
@@ -9,6 +9,7 @@ Socket::Socket()
 		std::cout << "Cannot connect to server.\n" << std::endl;
 		exit(1);
 	}
+	SDLNet_TCP_Send(socket, name.c_str(), name.size()+1);
 }
 
 Socket::~Socket()
@@ -16,16 +17,15 @@ Socket::~Socket()
 	SDLNet_TCP_Close(socket);
 }
 
-void Socket::send(std::string s)
+void Socket::send(json j)
 {
-	SDLNet_TCP_Send(socket, s.c_str(), s.size()+1);
+	SDLNet_TCP_Send(socket, j.dump().c_str(), j.dump().size()+1);
 }
 
-std::string Socket::recv()
+json Socket::recv()
 {
-	char message[MAXLEN];
-	int len;
-	SDLNet_TCP_Recv(socket, message, MAXLEN);
-	std::string s(message);
-	return s;
+	char msg[MAXLEN];
+	SDLNet_TCP_Recv(socket, msg, MAXLEN);
+	json j = json::parse(msg);
+	return j;
 }

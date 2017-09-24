@@ -1,22 +1,23 @@
 #include "entity.hpp"
 
-Entity::Entity(Window m)
+Entity::Entity(Window m, std::string n)
 {
-	x = y = 500;
 	height = width = 40;
 	renderer = m.getRenderer();
 
 	TTF_Font *font = TTF_OpenFont("fonts/DejaVuSerif.ttf",24);
 	SDL_Color color = {100,100,100};
 
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font,"@",color);
-	texture = SDL_CreateTextureFromSurface(renderer,textSurface);
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, "@", color);
+	texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+	name = n;
 }
 
 void Entity::place()
 {
 	SDL_Rect rect = {x, y, width, height};
-	SDL_RenderCopyEx(renderer, texture, NULL, &rect, 0, NULL,SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, texture, NULL, &rect, 0, NULL, SDL_FLIP_NONE);
 }
 
 void Entity::setAction(std::string s)
@@ -24,15 +25,19 @@ void Entity::setAction(std::string s)
 	actionString = s;
 }
 
-std::string Entity::action()
+json Entity::action()
 {
-	std::string tmp = actionString;
-	actionString = "none";
-	return tmp;
+	json j;
+	j[name] = {{"X",x},{"Y",y},{"action",actionString}};
+	actionString.clear();
+	return j;
 }
 
-void Entity::conclusion(std::string s)
+void Entity::conclusion(json j)
 {
-	x = stoi(s.substr(0,3));
-	y = stoi(s.substr(4,3));
+	if(j.find(name) != j.end()){
+		std::cout << "in" << std::endl;
+		x = j[name]["X"];
+		y = j[name]["Y"];
+	}
 }

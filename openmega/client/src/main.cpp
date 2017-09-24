@@ -2,12 +2,18 @@
 
 int main()
 {
+	std::string name;
+	std::cout << "Enter Name:";
+	std::cin >> name;
+
+	Socket connection(name);
+
 	Window main;
 	Event e;
 	Timer fps;
-	Socket connection;
 
-	Entity me(main);
+	Entity me(main, name);
+	std::vector<Entity> others;
 
 	while(e.gRun()){
 		fps.Start();
@@ -24,10 +30,18 @@ int main()
 		}
 	
 		connection.send(me.action());
-		me.conclusion(connection.recv());
+		json data = connection.recv();
+
+		me.conclusion(data);
+		for(auto it = others.begin(); it != others.end(); it++)
+			it->conclusion(data);
 
 		main.clear();
+
 		me.place();
+		for(auto it = others.begin(); it != others.end(); it++)
+			it->place();
+
 		main.render();
 
 		if(fps.getTicks() < (1000 / 60))

@@ -4,16 +4,18 @@
 #include <SDL2/SDL_net.h>
 #include <iostream>
 #include <string>
+#include "json.hpp"
+using json = nlohmann::json;
 
 #define MAXLEN 1024
 
 class Socket
 {
 	public:
-		Socket();
+		Socket(std::string name);
 		~Socket();
-		void send(std::string s);
-		std::string recv();
+		void send(json j);
+		json recv();
 		
 	private:
 		IPaddress 	ip;

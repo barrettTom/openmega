@@ -21,7 +21,7 @@ void Connections::querySockets()
 	for(auto it = connections.begin(); it != connections.end(); it++)
 		SDLNet_TCP_AddSocket(set, it->getSocket());
 	
-	SDLNet_CheckSockets(set, 100);
+	SDLNet_CheckSockets(set, 1);
 	if(SDLNet_SocketReady(server)){
 		TCPsocket sock = SDLNet_TCP_Accept(server);
 		if(sock){

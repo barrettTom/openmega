@@ -35,9 +35,12 @@ json Entity::action()
 
 void Entity::conclusion(json j)
 {
-	if(j.find(name) != j.end()){
-		std::cout << "in" << std::endl;
-		x = j[name]["X"];
-		y = j[name]["Y"];
+	for(auto entity = j.begin(); entity != j.end(); ++entity){
+		if((*entity).find(name) != (*entity).end()){
+			x = (*entity)[name]["X"];
+			y = (*entity)[name]["Y"];
+		}
+
 	}
 }
+

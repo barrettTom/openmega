@@ -7,7 +7,9 @@ Connection::Connection(TCPsocket s)
 	SDLNet_TCP_Recv(socket, name, MAXLEN);
 	json j;
 	j[name] = {{"X",40},{"Y",50}};
-	SDLNet_TCP_Send(socket, j.dump().c_str(), j.dump().size()+1);
+	json a;
+	a += j;
+	send(a);
 }
 
 bool Connection::active()
@@ -24,7 +26,6 @@ json Connection::recv()
 		return j;
 	}
 	catch(std::invalid_argument){
-		//std::cout << "parser error:\n" << msg << std::endl;
 		SDLNet_TCP_Close(socket);
 		return NULL;
 	}

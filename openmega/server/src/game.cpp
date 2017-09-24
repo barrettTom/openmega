@@ -9,7 +9,13 @@ void Game::processData()
 				int X = (*details)["X"];
 				int Y = (*details)["Y"];
 				if (action == "up")
+					Y--;
+				else if (action == "down")
 					Y++;
+				if (action == "right")
+					X++;
+				if (action == "left")
+					X--;
 				(*details)["X"] = X;
 				(*details)["Y"] = Y;
 			}

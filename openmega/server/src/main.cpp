@@ -8,6 +8,5 @@ int main(){
 		game.giveData(connections.getData());
 		game.processData();
 		connections.sendData(game.getData());
-		SDL_Delay(10);
 	}
 }
